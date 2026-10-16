@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Information Gathering &amp; Footprinting — Isabella Ipolito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← Back to portfolio</a>
+  <article>
+    <header class="page-head">
+      <h1>Information Gathering &amp; Footprinting</h1>
+      <p class="sub">Mapping an unknown network from the attacker's seat — operating systems, open ports, hostnames, and how the machines relate.</p>
+    </header>
+
+    <h2>Goal</h2>
+    <p>Footprinting is the first phase of any assessment: before you can evaluate a network you have to understand what's on it. From my Parrot box I used three tools to discover the five lab machines and build a clear picture of each one.</p>
+
+    <h2>Method</h2>
+    <h3>Host discovery</h3>
+    <p>A ping sweep across the lab subnet found every live host and its IP address, one target at a time.</p>
+    <h3>Service and OS fingerprinting</h3>
+    <p>For each machine I ran a service-version and OS-detection scan to identify the operating system, hostname, and which ports and services were open. I confirmed the results in Zenmap's graphical view, whose scripts also pulled details like exact OS build and domain membership.</p>
+    <h3>Traffic visualization</h3>
+    <p>EtherApe showed the scan traffic live as a graph — each host a node, each conversation a line — which made it easy to see the scanner reaching each target and to spot normal background domain traffic between the Windows machines.</p>
+
+    <h2>What I found</h2>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Machine</th><th>Hostname</th><th>Operating system</th><th>Open ports</th></tr></thead>
+        <tbody>
+          <tr><td>DC01</td><td>PROTECTOR-1</td><td>Windows Server 2019</td><td>20</td></tr>
+          <tr><td>DC02</td><td>SVR-08</td><td>Windows Server 2008 R2</td><td>11</td></tr>
+          <tr><td>00Seven</td><td>BRIDGE</td><td>Windows 7</td><td>10</td></tr>
+          <tr><td>Ten</td><td>ENGINEERING</td><td>Windows 10</td><td>4</td></tr>
+          <tr><td>Metasploitable2</td><td>metasploitable</td><td>Linux 2.6</td><td>23</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Reading the map</h2>
+    <ul>
+      <li><strong>Metasploitable2</strong> exposed the most — 23 open ports — making it the widest attack surface on the network.</li>
+      <li><strong>Ten</strong>, the Windows 10 client, exposed the least, with only four ports open.</li>
+      <li>The open ports on <strong>DC01</strong> (DNS, Kerberos, LDAP, SMB) are exactly what you'd expect on a domain controller and confirmed its role.</li>
+      <li>All the Windows machines belong to the same <code>PROTECTOR</code> domain, and none of them require SMB signing — a configuration weakness worth flagging.</li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>Takeaway:</strong> careful footprinting turns an unknown network into a labeled map. Knowing each host's OS, role, and exposure is what makes the next phase — assessing and prioritizing risk — possible.</p>
+    </div>
+
+    <h2>Skills practiced</h2>
+    <div class="toolrow">
+      <span class="tag">nmap</span><span class="tag">Zenmap</span><span class="tag">EtherApe</span><span class="tag">OS fingerprinting</span><span class="tag">Enumeration</span>
+    </div>
+  </article>
+  <footer>Isabella Ipolito — Cybersecurity portfolio</footer>
+</div>
+</body>
+</html>

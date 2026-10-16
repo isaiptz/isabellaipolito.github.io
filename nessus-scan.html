@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nessus Vulnerability Scan — Isabella Ipolito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← Back to portfolio</a>
+  <article>
+    <header class="page-head">
+      <h1>Nessus Vulnerability Scan</h1>
+      <p class="sub">Running authenticated vulnerability scans across five lab machines and reading the results by severity.</p>
+    </header>
+
+    <h2>Goal</h2>
+    <p>Use Nessus Essentials to scan every machine in the lab, then compare the findings to see how exposure differs between the managed Windows domain and a deliberately vulnerable target. The point isn't just to run a scan — it's to read the report and understand what it's telling me.</p>
+
+    <h2>Setup</h2>
+    <p>From my Parrot box I confirmed the Nessus service was running, found each target's IP on the lab segment with a quick <code>nmap</code> ping sweep, and ran a Basic Network Scan against all five. Host discovery doesn't count against the Essentials 16-host limit, so I used it to confirm every machine was up first.</p>
+
+    <h2>Results by severity</h2>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Machine</th><th>Critical</th><th>High</th><th>Medium</th><th>Low</th><th>Info</th></tr></thead>
+        <tbody>
+          <tr><td>DC01</td><td>0</td><td>1</td><td>16</td><td>2</td><td>105</td></tr>
+          <tr><td>DC02</td><td>4</td><td>3</td><td>10</td><td>2</td><td>45</td></tr>
+          <tr><td>Ten</td><td>0</td><td>2</td><td>10</td><td>1</td><td>50</td></tr>
+          <tr><td>00Seven</td><td>3</td><td>4</td><td>11</td><td>2</td><td>47</td></tr>
+          <tr><td>Metasploitable2</td><td>9</td><td>6</td><td>23</td><td>9</td><td>135</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>What the numbers show</h2>
+    <ul>
+      <li><strong>Metasploitable2</strong> was the most exposed by far — 9 critical and 6 high findings — which is expected for an image built to be vulnerable.</li>
+      <li><strong>DC02 and 00Seven</strong>, both older Windows builds, carried real critical findings, a reminder that unpatched legacy servers are where risk collects.</li>
+      <li><strong>DC01</strong>, the newest server, had no criticals and only one high — the clearest illustration of why keeping systems current matters.</li>
+      <li>Some categories showed as "mixed," meaning a single plugin family returned more than one severity level.</li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>Takeaway:</strong> a vulnerability scan is only useful once you can read it. Severity counts point you to what to fix first — criticals and highs on the oldest machines — and turn a wall of findings into a prioritized action list.</p>
+    </div>
+
+    <h2>Skills practiced</h2>
+    <div class="toolrow">
+      <span class="tag">Nessus Essentials</span><span class="tag">Host discovery</span><span class="tag">nmap</span><span class="tag">Severity triage</span><span class="tag">Reporting</span>
+    </div>
+  </article>
+  <footer>Isabella Ipolito — Cybersecurity portfolio</footer>
+</div>
+</body>
+</html>

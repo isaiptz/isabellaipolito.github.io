@@ -7,156 +7,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-<style>
-  /* Layout: single centered column, quiet editorial resume — name block, then stacked project cards */
-  :root {
-    --bg: #f4f2ee;
-    --surface: #ffffff;
-    --fg: #1c1d22;
-    --muted: #5d6068;
-    --line: #e2ded6;
-    --accent: #15635a;
-    --accent-soft: #e3efec;
-    --chip: #eceae4;
-    --font-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
-    --font-body: "Inter", system-ui, -apple-system, sans-serif;
-    --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #121316;
-      --surface: #1b1d21;
-      --fg: #ecedf0;
-      --muted: #9a9ea8;
-      --line: #2c2f35;
-      --accent: #4fd1bf;
-      --accent-soft: #15302c;
-      --chip: #24272d;
-      color-scheme: dark;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #121316;
-    --surface: #1b1d21;
-    --fg: #ecedf0;
-    --muted: #9a9ea8;
-    --line: #2c2f35;
-    --accent: #4fd1bf;
-    --accent-soft: #15302c;
-    --chip: #24272d;
-    color-scheme: dark;
-  }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; }
-  img { max-width: 100%; }
-  body {
-    background: var(--bg);
-    color: var(--fg);
-    font-family: var(--font-body);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-  .wrap {
-    max-width: 760px;
-    margin: 0 auto;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-block: 56px 72px;
-  }
-  header { border-bottom: 1px solid var(--line); padding-bottom: 32px; }
-  h1 {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(2.2rem, 7vw, 3.1rem);
-    letter-spacing: -0.02em;
-    margin: 0 0 6px;
-    text-wrap: balance;
-  }
-  .role {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    letter-spacing: 0.04em;
-    color: var(--accent);
-    text-transform: uppercase;
-    margin: 0 0 20px;
-  }
-  .lede { font-size: 1.08rem; color: var(--fg); max-width: 60ch; margin: 0 0 22px; }
-  .meta { display: flex; flex-wrap: wrap; gap: 8px 10px; }
-  .chip {
-    font-family: var(--font-mono);
-    font-size: 0.74rem;
-    letter-spacing: 0.02em;
-    background: var(--chip);
-    border: 1px solid var(--line);
-    color: var(--muted);
-    padding: 4px 10px;
-    border-radius: 999px;
-    white-space: nowrap;
-  }
-  .contact { margin-top: 18px; font-size: 0.9rem; color: var(--muted); font-family: var(--font-mono); }
-  .contact span { color: var(--fg); }
-  section { margin-top: 44px; }
-  .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin: 0 0 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .eyebrow::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-  .cards { display: flex; flex-direction: column; gap: 18px; }
-  a.card {
-    display: block;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 22px 24px;
-    text-decoration: none;
-    color: inherit;
-    transition: border-color .15s ease, transform .15s ease;
-  }
-  a.card:hover { border-color: var(--accent); transform: translateY(-2px); }
-  .card-top { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; }
-  .card h3 {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.22rem;
-    letter-spacing: -0.01em;
-    margin: 0 0 8px;
-    min-width: 0;
-  }
-  .card .date { font-family: var(--font-mono); font-size: 0.74rem; color: var(--muted); white-space: nowrap; }
-  .card p { margin: 0 0 14px; color: var(--muted); font-size: 0.96rem; }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
-  .tag {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--accent);
-    background: var(--accent-soft);
-    padding: 3px 8px;
-    border-radius: 6px;
-  }
-  .view { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); margin-top: 14px; display: inline-block; }
-  .certs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  @media (max-width: 520px) { .certs { grid-template-columns: 1fr; } }
-  .cert {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 16px 18px;
-  }
-  .cert strong { display: block; font-size: 0.98rem; margin-bottom: 3px; }
-  .cert span { font-size: 0.82rem; color: var(--muted); font-family: var(--font-mono); }
-  footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--muted); font-family: var(--font-mono); }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="wrap">
-  <header>
+  <header class="intro">
     <h1>Isabella Ipolito</h1>
     <p class="role">Cybersecurity Student · Aspiring Penetration Tester</p>
     <p class="lede">A.S. Cybersecurity student at Valencia College building hands-on skills in ethical hacking, vulnerability assessment, and Linux administration. I learn by building real labs and documenting every step.</p>
@@ -175,7 +30,7 @@
     <p class="eyebrow">Lab Projects</p>
     <div class="cards">
 
-      <a class="card" href="https://claude.ai/code/artifact/dbe4630f-b852-4b37-8367-a241701b4cdd" target="_blank" rel="noopener">
+      <a class="card" href="lab-build.html">
         <div class="card-top">
           <h3>Penetration Testing Lab Build</h3>
           <span class="date">Oct 2026</span>
@@ -187,19 +42,19 @@
         <span class="view">Read the write-up →</span>
       </a>
 
-      <a class="card" href="https://claude.ai/code/artifact/a2c7da03-a5ca-4b29-a40b-18f99ba8136b" target="_blank" rel="noopener">
+      <a class="card" href="nessus-scan.html">
         <div class="card-top">
           <h3>Nessus Vulnerability Scan</h3>
           <span class="date">Oct 2026</span>
         </div>
-        <p>Ran authenticated vulnerability scans across five lab machines with Nessus Essentials, then read and compared the reports by severity. Documented how exposure differed between hardened domain controllers and a deliberately vulnerable target, and what the critical and high findings meant.</p>
+        <p>Ran vulnerability scans across five lab machines with Nessus Essentials, then read and compared the reports by severity. Documented how exposure differed between hardened domain controllers and a deliberately vulnerable target, and what the critical and high findings meant.</p>
         <div class="tags">
           <span class="tag">Nessus</span><span class="tag">Vuln Assessment</span><span class="tag">Reporting</span><span class="tag">nmap</span>
         </div>
         <span class="view">Read the write-up →</span>
       </a>
 
-      <a class="card" href="https://claude.ai/code/artifact/0dcd3091-dcac-48f9-a143-2476e6a3c085" target="_blank" rel="noopener">
+      <a class="card" href="footprinting.html">
         <div class="card-top">
           <h3>Information Gathering &amp; Footprinting</h3>
           <span class="date">Oct 2026</span>
@@ -211,14 +66,14 @@
         <span class="view">Read the write-up →</span>
       </a>
 
-      <a class="card" href="https://claude.ai/code/artifact/e8b71134-44a5-4caa-92d9-7e752daa5cb4" target="_blank" rel="noopener">
+      <a class="card" href="password-assessment.html">
         <div class="card-top">
           <h3>Password Security Assessment</h3>
           <span class="date">Oct 2026</span>
         </div>
-        <p>Completed a full assessment chain against a vulnerable Linux target in the lab, then used the results to make the case for basic defenses: patching known-vulnerable services and enforcing strong, non-reused passwords. A practical look at why weak credentials don't survive contact with common tooling.</p>
+        <p>Assessed credential strength on a deliberately vulnerable Linux training target, then used the results to make the case for basic defenses: patching known-vulnerable services and enforcing strong, non-reused passwords. A practical look at why weak credentials don't survive contact with common tooling.</p>
         <div class="tags">
-          <span class="tag">Metasploit</span><span class="tag">John the Ripper</span><span class="tag">Linux</span><span class="tag">Hardening</span>
+          <span class="tag">John the Ripper</span><span class="tag">Linux</span><span class="tag">Hardening</span><span class="tag">Assessment</span>
         </div>
         <span class="view">Read the write-up →</span>
       </a>

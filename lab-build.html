@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Penetration Testing Lab Build — Isabella Ipolito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← Back to portfolio</a>
+  <article>
+    <header class="page-head">
+      <h1>Penetration Testing Lab Build</h1>
+      <p class="sub">Designing and building a six-VM isolated lab for hands-on security testing, fully segmented so nothing touches the home network.</p>
+    </header>
+
+    <h2>Goal</h2>
+    <p>I wanted a safe, self-contained environment where I could practice scanning, enumeration, and vulnerability assessment without any risk to a real network. The whole lab runs in VMware Workstation on a single isolated network segment, so the machines can only see each other.</p>
+
+    <h2>Environment</h2>
+    <p>Six virtual machines: one Parrot Security box as the attacker/scanner, and five targets built around a small Windows Active Directory domain plus one deliberately vulnerable Linux box used as a practice target.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>VM</th><th>Role</th><th>Operating system</th></tr></thead>
+        <tbody>
+          <tr><td>Parrot (Ipolito)</td><td>Attacker / scanner</td><td>Parrot 7.3 Security Edition</td></tr>
+          <tr><td>DC01</td><td>Primary domain controller</td><td>Windows Server</td></tr>
+          <tr><td>DC02</td><td>Replica domain controller</td><td>Windows Server</td></tr>
+          <tr><td>00Seven</td><td>Member server</td><td>Windows Server</td></tr>
+          <tr><td>Ten</td><td>Domain client</td><td>Windows 10</td></tr>
+          <tr><td>Metasploitable2</td><td>Vulnerable training target</td><td>Linux (Metasploitable)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How I built it</h2>
+    <h3>1. Network isolation</h3>
+    <p>Every adapter is set to the same private VMware LAN segment, with no connection to the host network or the internet during testing. VMware doesn't hand out addresses on that segment, so the primary domain controller runs DHCP for the lab.</p>
+
+    <h3>2. The attacker box</h3>
+    <p>I installed and updated Parrot Security, set its hostname and user, and added the scanning and assessment tools I'd need. I took a clean snapshot before installing Nessus so I could roll back instead of rebuilding if anything broke.</p>
+
+    <h3>3. The Active Directory domain</h3>
+    <p>I built the targets in dependency order, starting with DC01: static IP, Active Directory Domain Services, DNS, and a DHCP scope for the lab. DC02 joined as a second domain controller, 00Seven as a member server, and the Windows 10 client joined the domain as a normal user workstation.</p>
+
+    <h3>4. The vulnerable target</h3>
+    <p>Metasploitable2 is an intentionally insecure Linux image meant for training. It stays on the isolated segment only and never goes online. It gives me a realistic set of weaknesses to find and report against.</p>
+
+    <h3>5. Vulnerability scanner</h3>
+    <p>I installed Nessus Essentials on the Parrot box, confirmed the service was running, and let it compile its plugins — ready to scan the five targets.</p>
+
+    <div class="callout">
+      <p><strong>What I practiced:</strong> virtualization and networking, Windows Server and Active Directory setup, Linux administration, and standing up a vulnerability scanner — the foundation every assessment is built on.</p>
+    </div>
+
+    <h2>Reusable result</h2>
+    <p>The lab is snapshotted at each stage and documented end to end, so I can reset it to a clean state and reuse it across courses instead of rebuilding from scratch. It's the base environment for the scanning, footprinting, and assessment projects in this portfolio.</p>
+  </article>
+  <footer>Isabella Ipolito — Cybersecurity portfolio</footer>
+</div>
+</body>
+</html>
